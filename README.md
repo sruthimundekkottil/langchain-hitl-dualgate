@@ -5,7 +5,7 @@ sides — before it runs and after it returns — built two different ways, and 
 against each other.
 
 LangChain's built-in `HumanInTheLoopMiddleware` pauses only before a tool runs. But in certain cases, an option for the human to check its response after the model calls a tool before the model reads it is also needed.
-For eg: If a ecord comes back with a customer's phone number in it , post- execution gate can redact before the model sees it. Or when  SQL query returns 40k rows that will blow the context window, it can truncate or reject.
+For eg: If a record comes back with a customer's phone number in it , post- execution gate can redact before the model sees it. Or when  SQL query returns 40k rows that will blow the context window, it can truncate or reject.
  Adding a review after it runs turns out to be a genuinely different engineering problem,because LangGraph resumes an interrupted task by re-running it from the top. This repo contains both solutions to that problem, a measured comparison, and tests that pin thetradeoff down.
 
 ```bash
@@ -27,7 +27,7 @@ the beginning**. `interrupt()` itself is replay-safe — second time through it 
 stored answer instead of pausing — but everything before it runs again.
 
 A pre-execution gate is therefore trivially safe: nothing has happened yet. A
-post-execution gate sits *downstream of a side effect*, so the naive version charges the
+post-execution gate sits downstream of a side effect, so the naive version charges the
 card twice:
 
 ```python
