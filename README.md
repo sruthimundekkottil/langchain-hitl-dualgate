@@ -116,7 +116,7 @@ These are asserted, not just printed: see `tests/test_design_comparison.py`.
 | --- | --- |
 | A pre-execution gate (with or without result review) | **A**, `DualGateHumanInTheLoopMiddleware` |
 | Retry of one call in a multi-call turn | **A** |
-| The raw result never written to disk | **A** || Review of a tool that returns a `Command`, durably | **B**, `StateReviewMiddleware` |
+  Review of a tool that returns a `Command`, durably | **B**, `StateReviewMiddleware` |
 | Durability with no store to configure | **B** |
 | Both sides, durable results | **A**'s before gate + **B**, composed |
 
