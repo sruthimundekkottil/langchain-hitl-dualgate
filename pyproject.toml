@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dual-gate-hitl"
+version = "0.1.0"
+description = "Human-in-the-loop middleware for LangChain agents, gating tool calls before AND after execution"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "langchain>=1.5.0",
+    "langgraph>=1.2.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dual_gate_hitl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 90
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C90", "PL", "RUF", "ANN", "D"]
+ignore = ["D203", "D213", "ANN401"]
+
+[tool.ruff.lint.per-file-ignores]
+# The ledger classes implement the `ResultLedger` protocol, which documents every
+# method. Repeating those docstrings on each implementation adds noise, not meaning.
+"src/dual_gate_hitl/cache.py" = ["D102", "D107"]
+"tests/*" = ["D", "ANN", "PLR2004", "PLC0415"]
+"examples/*" = ["D", "ANN", "T201"]
+"benchmarks/*" = ["ANN", "T201", "PLR2004", "D102", "D103", "D401", "PLR0913"]
